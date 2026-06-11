@@ -1,0 +1,49 @@
+{
+  "name": "fabo-t-bot-md",
+  "version": "1.0.0",
+  "description": "FaBot - WhatsApp Bot Multi-Dispositivo para moderación de grupos.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yi3nes/FaBot.git"
+  },
+  "author": "Powered by yi3nes",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@whiskeysockets/baileys": "7.0.0-rc13",
+    "acrcloud": "^1.4.0",
+    "axios": "^1.7.2",
+    "webp-converter": "2.3.3",
+    "cfonts": "^3.3.0",
+    "chalk": "^5.3.0",
+    "cheerio": "^1.2.0",
+    "file-type": "^19.6.0",
+    "jsdom": "^20.0.1",
+    "fluent-ffmpeg": "^2.1.2",
+    "form-data": "^4.0.0",
+    "formdata-node": "^6.0.3",
+    "google-libphonenumber": "^3.2.40",
+    "sharp": "0.35.0-rc.5",
+    "moment-timezone": "^0.5.45",
+    "mongoose": "^8.9.5",
+    "node-cache": "^5.1.2",
+    "node-fetch": "^3.3.2",
+    "node-gtts": "^2.0.2",
+    "node-webpmux": "^3.2.0",
+    "pino": "^9.1.0",
+    "ruhend-scraper": "^10.0.0",
+    "sharp": "^0.33.5",
+    "syntax-error": "^1.4.0",
+    "ws": "^8.18.3",
+    "yargs": "^17.7.2",
+    "yt-search": "^2.11.0"
+  },
+  "optionalDependencies": {
+    "wa-sticker-formatter": "^4.4.4"
+  }
+}
