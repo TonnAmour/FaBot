@@ -18,36 +18,30 @@ const updateCommand = {
     rowner: true,
     run: async (m, { conn, args }) => {
         try {
-            await m.react("🔄");
             const output = await runCmd(`git pull ${args[0] || ''}`);
 
             if (/Already up[ -]to[ -]date/i.test(output)) {
-                await m.react("✅");
-                return conn.sendMessage(m.chat, { text: '『 ✅ 』 El sistema ya está actualizado.' }, { quoted: m });
+                return conn.sendMessage(m.chat, { text: 'El sistema ya esta actualizado.' }, { quoted: m });
             }
 
-            const updateMsg = `『 📦 ACTUALIZACIÓN COMPLETA 』\n\n\`\`\`${output.trim()}\`\`\`\n\n◈ *Sincronizando nuevos comandos...*`;
+            const updateMsg = `ACTUALIZACION COMPLETA\n\n${output.trim()}\n\nSincronizando nuevos comandos...`;
             await conn.sendMessage(m.chat, { text: updateMsg }, { quoted: m });
-
-            const pluginDir = path.join(__dirname, '../plugins');
 
             if (global.reloadHandler) {
                 await global.reloadHandler(true);
             }
 
-            await m.react("⚙️");
-            return m.reply("『 ✨ 』 Comandos recargados con éxito. Los cambios ya están vivos.");
+            return m.reply("Comandos recargados con exito. Los cambios ya estan vivos.");
 
         } catch (error) {
             let status = '';
             try { status = await runCmd('git status --porcelain'); } catch { status = 'Error de repo.'; }
 
             const conflictMsg = status.trim() 
-                ? `⚠️ Conflictos:\n\`\`\`${status.trim()}\`\`\`` 
+                ? `Conflictos:\n${status.trim()}` 
                 : error.toString();
 
-            await conn.sendMessage(m.chat, { text: `💀 *ERROR:* \n\n${conflictMsg}` }, { quoted: m });
-            await m.react("❌");
+            await conn.sendMessage(m.chat, { text: `ERROR:\n\n${conflictMsg}` }, { quoted: m });
         }
     }
 };

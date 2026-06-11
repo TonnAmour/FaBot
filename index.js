@@ -70,17 +70,14 @@ if (existsSync(dbPath)) {
             }
         }
     } catch (e) {
-        console.error(chalk.red('┗ ERROR AL LEER LA BASE DE DATOS LOCAL JSON, RECREANDO...'));
+        console.error(chalk.red('[ERROR] BASE DE DATOS LOCAL JSON, RECREANDO...'));
     }
 } else {
     fs.writeFileSync(dbPath, JSON.stringify(global.db, null, 2), 'utf-8');
 }
 
 const logDB = (type, status) => {
-    console.log(chalk.cyan('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓'));
-    console.log(chalk.cyan('┃ ') + chalk.bold(`DATABASE: `) + chalk.blueBright(type));
-    console.log(chalk.cyan('┃ ') + chalk.bold(`STATUS:   `) + (status === 'CONNECTED' ? chalk.greenBright(status) : chalk.redBright(status)));
-    console.log(chalk.cyan('┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛'));
+    console.log(chalk.cyan('[DATABASE] ') + chalk.blueBright(type) + ' | ' + (status === 'CONNECTED' ? chalk.greenBright(status) : chalk.redBright(status)));
 };
 
 console.clear();
@@ -119,14 +116,14 @@ process.on('unhandledRejection', (reason) => {
 });
 
 const originalLog = console.log;
-console.log = (...args) => originalLog.apply(console, [chalk.cyan('┃'), ...args]);
+console.log = (...args) => originalLog.apply(console, [chalk.cyan('[BOT]'), ...args]);
 const originalError = console.error;
 console.error = (...args) => {
     args.forEach(arg => {
         if (arg instanceof Error) {
-            originalError.apply(console, [chalk.red('┗ ERROR DETALLADO:'), arg.stack]);
+            originalError.apply(console, [chalk.red('[ERROR]'), arg.stack]);
         } else {
-            originalError.apply(console, [chalk.red('┗'), arg]);
+            originalError.apply(console, [chalk.red('[ERROR]'), arg]);
         }
     });
 };
@@ -266,13 +263,13 @@ function getReconnectDelay() {
 if (!state.creds.registered) {
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
     const question = (t) => new Promise((r) => rl.question(t, r));
-    let phoneNumber = await question(chalk.cyan('┃ ') + `Número: `);
+    let phoneNumber = await question(chalk.cyan('[BOT] ') + `Número: `);
     let addNumber = phoneNumber.replace(/\D/g, '');
     rl.close();
     setTimeout(async () => {
         try {
             let codeBot = await conn.requestPairingCode(addNumber);
-            console.log(chalk.cyan('┃ ') + chalk.bgBlack.white.bold(` CÓDIGO: ${codeBot?.match(/.{1,4}/g)?.join("-") || codeBot} `));
+            console.log(chalk.cyan('[BOT] ') + chalk.bgBlack.white.bold(` CODIGO: ${codeBot?.match(/.{1,4}/g)?.join("-") || codeBot} `));
         } catch (e) { console.error(e); }
     }, 3000);
 }
@@ -363,20 +360,19 @@ global.reload = async function(restatConn) {
     if (connection === 'close') {
         const reason = new Boom(lastDisconnect?.error)?.output?.statusCode || 0;
         if (reason === DisconnectReason.loggedOut || reason === 403) {
-            console.error(chalk.red(`┃ STATUS: SESIÓN CAÍDA (código ${reason}) — RECONECTANDO SIN BORRAR SESIÓN`));
+            console.error(chalk.red(`[BOT] STATUS: SESION CAIDA (codigo ${reason}) — RECONECTANDO SIN BORRAR SESION`));
         } else {
-            console.error(chalk.yellow(`┃ STATUS: DESCONECTADO (código ${reason}) — RECONECTANDO...`));
+            console.error(chalk.yellow(`[BOT] STATUS: DESCONECTADO (codigo ${reason}) — RECONECTANDO...`));
         }
         const delay = getReconnectDelay();
-        console.log(chalk.cyan(`┃ Reintento #${global._reconnectAttempts} en ${delay / 1000}s...`));
+        console.log(chalk.cyan(`[BOT] Reintento #${global._reconnectAttempts} en ${delay / 1000}s...`));
         setTimeout(() => global.reload(true), delay);
     }
 
     if (connection === 'open') {
         global._reconnectAttempts = 0;
         global.botNumber = sId(global.conn.user.id);
-        console.log(chalk.cyan('┃ ') + chalk.greenBright.bold(`STATUS: ONLINE`));
-        console.log(chalk.cyan('┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛'));
+        console.log(chalk.cyan('[BOT] ') + chalk.greenBright.bold(`STATUS: ONLINE`));
 
         const groups = await global.conn.groupFetchAllParticipating().catch(() => ({}));
         for (const id in groups) {

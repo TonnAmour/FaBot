@@ -12,7 +12,7 @@ const hidetagCommand = {
                 if (metadata && global.groupCache) global.groupCache.set(m.chat, metadata);
             }
 
-            if (!metadata || !metadata.participants) return await m.react('❌');
+            if (!metadata || !metadata.participants) return;
 
             const users = [];
             metadata.participants.forEach(u => {
@@ -23,7 +23,7 @@ const hidetagCommand = {
             const mentions = [...new Set(users)];
             const q = m.quoted ? m.quoted : m;
             const mime = (q.msg || q).mimetype || '';
-            const tagText = text || (m.quoted && m.quoted.text) || "Nᴏᴛɪғɪᴄᴀᴄɪóɴ Gᴇɴᴇʀᴀʟ";
+            const tagText = text || (m.quoted && m.quoted.text) || "Notificacion General";
 
             if (mime) {
                 const media = await q.download();
@@ -49,10 +49,8 @@ const hidetagCommand = {
                 }, { quoted: m });
             }
 
-            await m.react('✅');
         } catch (e) {
             console.error(e);
-            await m.react('❌');
         }
     }
 }

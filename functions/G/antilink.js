@@ -30,7 +30,7 @@ const antiLinkPlugin = {
 
                 const type = (isChannelLink || isForwardedChannel) ? 'canales' : 'otros grupos';
                 await conn.sendMessage(m.chat, { 
-                    text: `> ✰ Se ha eliminado a @${m.sender.split('@')[0]} del grupo por \`AntiLink\`, no permitimos enlaces de *${type}*.`,
+                    text: `Se ha eliminado a @${m.sender.split('@')[0]} del grupo por AntiLink, no permitimos enlaces de ${type}.`,
                     mentions: [m.sender]
                 }).catch(() => null);
             } else {

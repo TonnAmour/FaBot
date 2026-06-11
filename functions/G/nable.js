@@ -16,7 +16,7 @@ const enable = {
         const type = command.toLowerCase();
 
         if (type === 'enable' || !featureMap[type]) {
-            let menu = `❯❯ 𝗦𝗬𝗦𝗧𝗘𝗠 𝗖𝗢𝗡𝗙𝗜𝗚𝗨𝗥𝗔𝗧𝗜𝗢𝗡\n\n`;
+            let menu = `CONFIGURACION DEL GRUPO\n\n`;
             const options = [
                 { name: 'Bienvenida', key: 'welcome' },
                 { name: 'Anti-Links', key: 'antiLink' },
@@ -24,8 +24,8 @@ const enable = {
             ];
 
             options.forEach(opt => {
-                const status = chat[opt.key] ? '✅ ᴀᴄᴛɪᴠᴀᴅᴏ' : '❌ ᴅᴇsᴀᴄᴛɪᴠᴀᴅᴏ';
-                menu += `❖ *${opt.name}:* ${status}\n`;
+                const status = chat[opt.key] ? 'ACTIVADO' : 'DESACTIVADO';
+                menu += `${opt.name}: ${status}\n`;
             });
             return m.reply(menu.trim());
         }
@@ -39,8 +39,8 @@ const enable = {
             global.db.chats[m.chat][dbKey] = newValue;
         }
 
-        let statusText = newValue ? 'ᴀᴄᴛɪᴠᴀᴅᴏ' : 'ᴅᴇsᴀᴄᴛɪᴠᴀᴅᴏ';
-        return m.reply(`> ʟᴀ ғᴜɴᴄɪᴏɴ *${type.toUpperCase()}* sᴇ ʜᴀ ${statusText}.`);
+        let statusText = newValue ? 'ACTIVADO' : 'DESACTIVADO';
+        return m.reply(`La funcion ${type.toUpperCase()} se ha ${statusText}.`);
     }
 }
 export default enable;

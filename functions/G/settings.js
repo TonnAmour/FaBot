@@ -11,7 +11,7 @@ const groupConfig = {
     run: async function (m, { conn, text, command, participants, chat }) {
 
         if (command === 'setwelcome') {
-            if (!text) return m.reply('> ✎ ɪɴɢʀᴇsᴀ ᴇʟ ᴛᴇxᴛᴏ.\nVariables disponibles:\n@us = Usuario\n@g = Nombre del grupo\n@t = Total miembros\n@d = Descripción\n@n = Nombre en mayúsculas\n\nEj: #setwelcome Hola @us\nBienvenido a @g')
+            if (!text) return m.reply('Ingresa el texto.\nVariables:\n@us = Usuario\n@g = Nombre del grupo\n@t = Total miembros\n@d = Descripcion\n@n = Nombre en mayusculas\n\nEj: #setwelcome Hola @us\nBienvenido a @g')
 
             let welcomeMessage = text;
             if (text.toLowerCase() === '@rules') {
@@ -25,7 +25,7 @@ const groupConfig = {
                 global.db.chats[m.chat].customWelcome = welcomeMessage;
             }
 
-            return m.reply(`> ┏━━━〔 sɪsᴛᴇᴍᴀ 〕━━━┓\n> ┃ ✎ ᴄᴏɴꜰɪɢ: ᴡᴇʟᴄᴏᴍᴇ ꜱᴇᴛ\n> ┗━━━━━━━━━━━━━━━━━━┛`)
+            return m.reply(`CONFIG: WELCOME SET`)
         }
 
         if (command === 'delwelcome') {
@@ -34,39 +34,39 @@ const groupConfig = {
             } else if (global.db.chats[m.chat]) {
                 global.db.chats[m.chat].customWelcome = '';
             }
-            return m.reply(`> ┏━━━〔 sɪsᴛᴇᴍᴀ 〕━━━┓\n> ┃ ✎ ᴄᴏɴꜰɪɢ: ᴡᴇʟᴄᴏᴍᴇ ʀᴇsᴇᴛ\n> ┗━━━━━━━━━━━━━━━━━━┛`)
+            return m.reply(`CONFIG: WELCOME RESET`)
         }
 
         if (/renombrar|setnombre|setname/i.test(command)) {
-            if (!text) return m.reply('> ┃ ✎ ɪɴғᴏ: ɪɴɢʀᴇsᴀ ᴇʟ ɴᴏᴍʙʀᴇ.')
+            if (!text) return m.reply('Ingresa el nombre.')
             await conn.groupUpdateSubject(m.chat, text)
-            return m.reply(`> ┏━━━〔 sɪsᴛᴇᴍᴀ 〕━━━┓\n> ┃ ✎ ᴄᴀᴍʙɪᴏ: ɴᴏᴍʙʀᴇ ᴀᴄᴛᴜᴀʟ\n> ┃ ✎ ᴠᴀʟᴜᴇ: ${text}\n> ┗━━━━━━━━━━━━━━━━━━┛`)
+            return m.reply(`Nombre actualizado: ${text}`)
         }
 
         if (/desc|setdesc/i.test(command)) {
             let newDesc = m.quoted ? m.quoted.text : text
-            if (!newDesc) return m.reply('> ┃ ✎ ɪɴғᴏ: ɪɴɢʀᴇsᴀ ʟᴀ ᴅᴇsᴄʀɪᴘᴄɪᴏɴ.')
+            if (!newDesc) return m.reply('Ingresa la descripcion.')
             await conn.groupUpdateDescription(m.chat, newDesc)
-            return m.reply(`> ┏━━━〔 sɪsᴛᴇᴍᴀ 〕━━━┓\n> ┃ ✎ ᴄ...ɴғɪɢ: ᴅᴇsᴄ ᴀᴄᴛᴜᴀʟɪᴢᴀᴅᴀ\n> ┗━━━━━━━━━━━━━━━━━━┛`)
+            return m.reply(`Descripcion actualizada.`)
         }
 
         if (/setfoto|setpp/i.test(command)) {
             let q = m.quoted ? m.quoted : m
             let mime = (q.msg || q).mimetype || ''
-            if (!/image/.test(mime)) return m.reply('> ┃ ✎ ᴇʀʀᴏʀ: ʀᴇsᴘᴏɴᴅᴇ ᴀ ᴜɴᴀ ɪᴍᴀɢᴇɴ.')
+            if (!/image/.test(mime)) return m.reply('Responde a una imagen.')
             let media = await q.download()
             await conn.updateProfilePicture(m.chat, media)
-            return m.reply(`> ┏━━━〔 sɪsᴛᴇᴍᴀ 〕━━━┓\n> ┃ ✎ ᴄ...ɴғɪɢ: ғᴏᴛᴏ ᴀᴄᴛᴜᴀʟɪᴢᴀᴅᴀ\n> ┗━━━━━━━━━━━━━━━━━━┛`)
+            return m.reply(`Foto actualizada.`)
         }
 
         if (/elimina|kick|ban|echar|sacar/i.test(command)) {
             let users = m.mentionedJid.concat(m.quoted ? [m.quoted.sender] : []).filter(u => u !== conn.user.jid)
-            if (users.length === 0) return m.reply('> ✎ ɪɴғᴏ: ᴇᴛɪǫᴜᴇᴛᴀ ᴀ ᴀʟɢᴜɪᴇɴ.')
+            if (users.length === 0) return m.reply('Etiqueta a alguien.')
             await conn.groupParticipantsUpdate(m.chat, users, 'remove')
         }
 
         if (/tagall|todos|all|anuncio/i.test(command)) {
-            let txt = `> ┏━━━〔 ᴀɴᴜɴᴄɪᴏ ɢʀᴜᴘᴀʟ 〕━━━┓\n> ┃ ✎ ᴍsɢ: ${text || 'sɪɴ ᴍᴏᴛɪᴠᴏ'}\n> ┃\n`
+            let txt = `ANUNCIO GRUPAL\nMensaje: ${text || 'sin motivo'}\n\n`
 
             const realParticipants = await Promise.all(
                 participants.map(async (p) => {
@@ -75,10 +75,8 @@ const groupConfig = {
             );
 
             for (let jid of realParticipants) {
-                txt += `> ┃ ✎ @${jid.split('@')[0]}\n`
+                txt += `@${jid.split('@')[0]}\n`
             }
-
-            txt += `> ┗━━━━━━━━━━━━━━━━━━┛`
 
             return conn.sendMessage(m.chat, { 
                 text: txt, 

@@ -50,7 +50,7 @@ const antiLink2Plugin = {
                 await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove').catch(() => null);
 
                 await conn.sendMessage(m.chat, { 
-                    text: `> *CONTENIDO PROHIBIDO DETECTADO* \n\n> Se ha expulsado a *@${m.sender.split('@')[0]}* por enviar enlaces de contenido explícito o sitios no permitidos.`,
+                    text: `CONTENIDO PROHIBIDO DETECTADO\n\nSe ha expulsado a @${m.sender.split('@')[0]} por enviar enlaces de contenido explicito o sitios no permitidos.`,
                     contextInfo: { mentionedJid: [m.sender] }
                 }).catch(() => null);
             }

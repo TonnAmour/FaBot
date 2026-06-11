@@ -6,7 +6,7 @@ const menu = {
     category: 'info',
     run: async function (m, { conn, usedPrefix }) {
         try {
-            if (!global.plugins) return m.reply('> ✎ ᴇʀʀᴏʀ: ɴᴏ sᴇ ᴇɴᴄᴏɴᴛʀᴀʀᴏɴ ᴄᴏᴍᴀɴᴍᴅᴏs ᴄᴀʀɢᴀᴅᴏs.');
+            if (!global.plugins) return m.reply('[ERROR] No se encontraron comandos cargados.');
 
             const categories = {};
 
@@ -31,15 +31,12 @@ const menu = {
                 }
 
                 totalCommands.forEach(cmd => {
-                    categories[category].push(` ⛩️  ${usedPrefix}${cmd}`);
+                    categories[category].push(`  ${usedPrefix}${cmd}`);
                 });
             });
 
-            let menuText = `👑 *${name(conn)}* 👑\n`;
-            menuText += `*───────────────────*\n`;
-            menuText += `⚙️ *ᴘʀᴇғɪᴊᴏ:* [ ${usedPrefix} ]\n`;
-            menuText += `*───────────────────*\n\n`;
-            menuText += `${rmr}\n\n`;
+            let menuText = `*${name(conn)}*\n`;
+            menuText += `Prefijo: ${usedPrefix}\n\n`;
 
             const orderedCategories = Object.keys(categories).sort();
 
@@ -48,56 +45,19 @@ const menu = {
 
                 const uniqueCommands = [...new Set(categories[cat])].sort();
 
-                menuText += `┏━━〔 *${cat}* 〕━━┓\n`;
+                menuText += `[ ${cat} ]\n`;
                 uniqueCommands.forEach(cmd => {
-                    menuText += `┃${cmd}\n`;
+                    menuText += `${cmd}\n`;
                 });
-                menuText += `┗━━━━━━━━━━━━━━━┛\n\n`;
+                menuText += '\n';
             });
 
-            menuText += `_Desarrollado por yi3nes._`;
+            menuText += `Desarrollado por ton.`;
 
-            const targetUrl = "https://cdn.dix.lat";
-            const imgUrl = "https://cdn.dix.lat/me/b7f2e139-8235-44cc-9ebd-9bc7fc97c0a8.jpg";
-
-            const response = await axios.get(imgUrl, { responseType: 'arraybuffer' }).catch(() => null);
-            if (!response) return m.reply("Error al descargar la miniatura del menú.");
-
-            await conn.relayMessage(m.chat, {
-                extendedTextMessage: {
-                    text: targetUrl + "\n@120363424254110342@g.us\n\n" + menuText,
-                    matchedText: targetUrl,
-                    canonicalUrl: targetUrl,
-                    description: null,
-                    title: `❖ KIRITO - BOT MD ❖`,
-                    jpegThumbnail: response.data,
-                    previewType: 1,
-                    contextInfo: {
-                        ...channelInfo,
-                        mentionedJid: [m.sender],
-                        groupMentions: [
-                            {
-                                groupJid: "120363424254110342@g.us",
-                                groupSubject: "Hola soy yo ❖ FABOT - BOT MD ❖"
-                            }
-                        ],
-                        externalAdReply: {
-                    title: `❖ FABOT - BOT MD ❖`,
-                            body: "FaBot MD Network",
-                            mediaType: 1,
-                            previewType: 0,
-                            thumbnailType: "PHOTO",
-                            thumbnail: response.data,
-                            sourceUrl: targetUrl,
-                            renderLargerThumbnail: true
-                        }
-                    }
-                }
-            }, { quoted: m });
-
+            return m.reply(menuText);
         } catch (e) {
             console.error(e);
-            return m.reply('> ✎ ᴇʀʀᴏʀ ᴀʟ ɢᴇɴᴇʀᴀʀ ᴇʟ ᴍᴇɴᴜ.');
+            return m.reply('[ERROR] No se pudo generar el menu.');
         }
     }
 };

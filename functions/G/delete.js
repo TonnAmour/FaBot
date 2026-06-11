@@ -28,7 +28,7 @@ const deleteCommand = {
                         await conn.sendMessage(m.chat, { delete: msg.key }).catch(() => null);
                     }
                 }
-                return await m.react('🗑️');
+                return;
             }
 
             const count = parseInt(text);
@@ -37,7 +37,7 @@ const deleteCommand = {
                 const messages = conn.store?.messages[m.chat]?.array || [];
 
                 if (!messages || messages.length === 0) {
-                    return conn.reply(m.chat, '> ⚠ El store está vacío para este chat.', m);
+                    return conn.reply(m.chat, 'El store esta vacio para este chat.', m);
                 }
 
                 const toDelete = messages.slice(-limit);
@@ -46,15 +46,15 @@ const deleteCommand = {
                         await conn.sendMessage(m.chat, { delete: msg.key }).catch(() => null);
                     }
                 }
-                return await m.react('🗑️');
+                return;
             }
 
-            return conn.reply(m.chat, '> ✎ Responde a un mensaje para borrarlo.', m);
+            return conn.reply(m.chat, 'Responde a un mensaje para borrarlo.', m);
 
         } catch (e) {
 
             const errorText = format(e);
-            await conn.reply(m.chat, `❌ *ERROR CRÍTICO AL ELIMINAR*\n\n> *Mensaje:* ${e.message}\n\n\`\`\`${errorText}\`\`\``, m);
+            await conn.reply(m.chat, `[ERROR] ${e.message}`, m);
         }
     }
 }

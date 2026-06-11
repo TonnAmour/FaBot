@@ -15,7 +15,7 @@ global.owner = [['56939026360']]
 global.dev1 = '56939026360'
 
 global.botNames = [
-  '❖ 𝑭𝒂𝑩𝒐𝒕 - 𝑩𝑶𝑻 𝑴𝑫 ❖'
+  'FaBot'
 ]
 
 global.botImages = [
@@ -33,8 +33,8 @@ Object.assign(global, conf.utils)
 
 global.sessions = conf.sessions.main
 global.ch = conf.social.channel
-global.rmr = more.repeat(850)
-global.developer = '𝚈𝚒𝟹𝚗𝚎𝚜'
+global.rmr = ''
+global.developer = 'ton'
 
 global.name = (conn) => {
     try {
@@ -43,7 +43,7 @@ global.name = (conn) => {
 };
 
 global.ads = {
-    mensaje: 'Sigue nuestro canal: whatsapp.com/channel/0029VbC195k9xVJWUtGQ2m29'
+    mensaje: ''
 }
 
 global.v = JSON.parse(fs.readFileSync('./package.json', 'utf-8')).version
@@ -103,9 +103,9 @@ const hour = new Intl.DateTimeFormat('es-HN', {
     timeZone: 'America/Tegucigalpa'
 }).format(new Date());
 
-global.saludo = hour >= 6 && hour < 12 ? 'Lɪɴᴅᴀ Mᴀɴ̃ᴀɴᴀ 🌅' : 
-                 hour >= 12 && hour < 19 ? 'Lɪɴᴅᴀ Tᴀʀᴅᴇ 🌆' : 
-                 'Lɪɴᴅᴀ Nᴏᴄʜᴇ 🌃';
+global.saludo = hour >= 6 && hour < 12 ? 'Buenos dias' : 
+                 hour >= 12 && hour < 19 ? 'Buenas tardes' : 
+                 'Buenas noches';
 
 let file = fileURLToPath(import.meta.url)
 watchFile(file, () => {
