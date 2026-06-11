@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "@hapi/boom": "^10.0.1",
-    "@whiskeysockets/baileys": "7.0.0-rc13",
+    "@whiskeysockets/baileys": "TonnAmour/kirito-socket",
     "acrcloud": "^1.4.0",
     "axios": "^1.7.2",
     "webp-converter": "2.3.3",
